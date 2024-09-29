@@ -23,7 +23,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ open, onClose, onReview
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(`http://localhost:5000/api/movies/${selectedMovieId}/reviews`, {
+            const response = await fetch(`https://movie-db-backend-production.up.railway.app/api/movies/${selectedMovieId}/reviews`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
