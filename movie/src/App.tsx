@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box, Button, AppBar, Toolbar, Typography } from "@mui/material";
@@ -5,12 +6,18 @@ import HomePage from "./pages/HomePage";
 import MovieReviewPage from "./components/MovieReviewPage";
 import ReviewSearchPage from "./pages/ReviewSearchPage";
 import AddMovieModal from "./components/AddMoviewModal"; 
+import AddReviewModal from "./components/AddReviewModal"; // Import AddReviewModal
 import { MovieProvider } from './context/MovieContext'; // Import MovieProvider
-import { useState } from "react";
-import ReviewByMoviePage from "./pages/ReviewByMoviePage";
+import ReviewByMoviePage from './pages/ReviewByMoviePage';
 
 function App() {
-    const [open, setOpen] = useState(false); // Modal state
+    const [openAddMovie, setOpenAddMovie] = useState(false); // Modal state for Add Movie
+    const [openAddReview, setOpenAddReview] = useState(false); // Modal state for Add Review
+
+    const handleReviewAdded = () => {
+        // Function to refresh the data when a review is added
+        // You may want to trigger a re-fetch of the reviews or movies
+    };
 
     return (
         <MovieProvider>
@@ -20,10 +27,10 @@ function App() {
                         MOVIECRITIC
                     </Typography>
                     <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mt: { xs: 2, sm: 0 } }}>
-                        <Button variant="outlined" sx={{ textTransform: "none", borderColor: "#7d59ff", color: "#7d59ff", "&:hover": { backgroundColor: "rgba(125, 89, 255, 0.1)", borderColor: "#7d59ff", } }} onClick={() => setOpen(true)}>
+                        <Button variant="outlined" sx={{ textTransform: "none", borderColor: "#7d59ff", color: "#7d59ff", "&:hover": { backgroundColor: "rgba(125, 89, 255, 0.1)", borderColor: "#7d59ff" } }} onClick={() => setOpenAddMovie(true)}>
                             Add new movie
                         </Button>
-                        <Button variant="contained" sx={{ textTransform: "none", backgroundColor: "#7d59ff", color: "#fff", "&:hover": { backgroundColor: "#6446d6", } }}>
+                        <Button variant="contained" sx={{ textTransform: "none", backgroundColor: "#7d59ff", color: "#fff", "&:hover": { backgroundColor: "#6446d6" } }} onClick={() => setOpenAddReview(true)}>
                             Add new review
                         </Button>
                     </Box>
@@ -38,7 +45,9 @@ function App() {
                 </Routes>
             </Router>
             {/* AddMovieModal component */}
-            <AddMovieModal open={open} onClose={() => setOpen(false)} />
+            <AddMovieModal open={openAddMovie} onClose={() => setOpenAddMovie(false)} />
+            {/* AddReviewModal component */}
+            <AddReviewModal open={openAddReview} onClose={() => setOpenAddReview(false)} onReviewAdded={handleReviewAdded} />
         </MovieProvider>
     );
 }
